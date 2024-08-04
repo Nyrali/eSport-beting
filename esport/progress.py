@@ -12,9 +12,9 @@ expanded_df = expand_df(df)
 expanded_df = cleansing_df(expanded_df)
 expanded_df = adjust_scores(expanded_df)
 filtered_df = filter_by_match_count (expanded_df, match_count = 20)
+filtered_df = filtered_df.dropna()
 
-
-
+filtered_df
 
 
 
