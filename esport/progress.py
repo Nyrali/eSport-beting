@@ -3,7 +3,13 @@ import pandas as pd
 import numpy as np
 sys.path.append('D:/betting/esport')
 
-from func import date_formating, expand_df, cleansing_df, adjust_scores, filter_by_match_count
+from func import date_formating, expand_df, cleansing_df, adjust_scores, filter_by_match_count, calculate_cumulative_win_rate, calculate_rolling_sums, calculate_win_streaks, drop_rolling_columns, make_opponent_df
+
+sys.path.append('D:/betting/esport')
+import sys
+print(sys.path)
+import func
+print(dir(func))
 
 df = pd.read_csv("D:\\betting\\esport\\valorant.csv")
 
@@ -12,55 +18,72 @@ expanded_df = expand_df(df)
 expanded_df = cleansing_df(expanded_df)
 expanded_df = adjust_scores(expanded_df)
 filtered_df = filter_by_match_count (expanded_df, match_count = 20)
+filtered_df = filtered_df.dropna()
+
+
+winrate_df = calculate_cumulative_win_rate(filtered_df)
+rolling_win_rate_df = calculate_rolling_sums(winrate_df)
+win_streak_df = calculate_win_streaks(rolling_win_rate_df)
+win_streak_df = drop_rolling_columns(win_streak_df)
+
+
+bm_cols = [i for i in win_streak_df.columns if "bm" in i]
+opp_df = make_opponent_df(win_streak_df, bm_cols, prefix ="opp_")
+opp_df = opp_df.drop_duplicates(subset=['opponent', 'datetime'])
+
+duplicates = opp_df[opp_df.duplicated(subset=['opponent', 'datetime'], keep=False)]
+merged_df = pd.merge(win_streak_df,opp_df, on =["opponent", "datetime", "date"], how = "left" )
 
 
 
 
+win_streak_df["games_played_bm"]
+bm_cols
+
+merged_df
+
+merged_df.iloc[0]
 
 
-test = filtered_df.copy()
+vita_df_merged = merged_df[merged_df["team"] == "TEAM VITALITY"]
+
+trace_df_merged = merged_df[merged_df["team"] == "TRACE ESPORTS"]
+
+vita_df = win_streak_df[win_streak_df["team"] == "TEAM VITALITY"]
+
+trace_df_opp=opp_df[(opp_df["opponent"] == "TRACE ESPORTS") & (opp_df["datetime"] == "2024-08-03 12:30:00")]
+
+vita_df.iloc[135]
+trace_df_opp.iloc[0]
+
+trace_df_merged.iloc[47]
+
+trace_df_opp.iloc[44]
+
+vita_df_merged.iloc[135]
+
+trace_df_merged.iloc[47]
+
+
+
+def drop_rolling_columns(df):
+    # Drop columns containing the substring 'rolling'
+    columns_to_drop = df.filter(regex='rolling').columns
+    df = df.drop(columns=columns_to_drop)
+    return df
+
+
+
+bm_cols = [i for i in win_streak_df.columns if "bm" in i]
+
+bm_cols
+
+len(bm_cols)
+
+
 test
 
-test[test["result"] == "draw"]
 
-
-
-def calculate_overall_win_rate(df):
-    # Calculate the win rate for each team
-    df['team_wins'] = df.apply(lambda row: row['score'] > row['opponent_score'], axis=1).astype(int)
-    team_stats = df.groupby('team')['team_wins'].agg(['sum', 'count']).reset_index()
-    team_stats.rename(columns={'sum': 'total_wins', 'count': 'total_games'}, inplace=True)
-    team_stats['win_rate'] = team_stats['total_wins'] / team_stats['total_games']
-    
-    # Merge win rate back into the main DataFrame
-    df = df.merge(team_stats[['team', 'win_rate']], on='team', how='left')
-    
-    return df
-
-
-test = calculate_overall_win_rate(filtered_df)
-
-
-
-def calculate_moving_rolling_win_rates(df, window_size=3, max_shifts=6):
-    # Ensure 'date' column is in datetime format
-    df['date'] = pd.to_datetime(df['date'], format='%m-%d-%Y')
-    
-    # Ensure data is sorted by team and date
-    df = df.sort_values(by=['team', 'date'])
-    
-    # Create a binary win indicator for each game
-    df['win'] = (df['score'] > df['opponent_score']).astype(int)
-    
-    # Compute rolling win rates with a fixed window size
-    for shift in range(max_shifts):
-        start_col = f'rolling_win_rate_start_{shift + 1}'
-        df[start_col] = df.groupby('team')['win'].transform(lambda x: x.shift(shift).rolling(window=window_size, min_periods=1).mean())
-    
-    # Drop the temporary 'win' column as it's no longer needed
-    df.drop(columns=['win'], inplace=True)
-    
-    return df
 
 
 
@@ -74,50 +97,99 @@ def calculate_cumulative_win_rate(df):
     df['team_wins'] = df['score'] > df['opponent_score']
     
     # Calculate cumulative wins and games for each team
-    df['cumulative_wins'] = df.groupby('team')['team_wins'].cumsum()
-    df['cumulative_games'] = df.groupby('team').cumcount() + 1
+    df['games_won'] = df.groupby('team')['team_wins'].cumsum()
+    df['games_played'] = df.groupby('team').cumcount() + 1
     
     # Calculate win rate
-    df['win_rate'] = df['cumulative_wins'] / df['cumulative_games']
+    df['win_rate'] = df['games_won'] / df['games_played']
     
     # Calculate win rate before this match (one match back)
-    df['win_rate_before'] = df.groupby('team')['win_rate'].shift(1)
-    df['cumulative_games_before'] = df.groupby('team')['cumulative_games'].shift(1)
-    df['cumulative_wins_before'] = df.groupby('team')['cumulative_wins'].shift(1)
+    df['win_rate_bm'] = df.groupby('team')['win_rate'].shift(1)
+    df['games_played_bm'] = df.groupby('team')['games_played'].shift(1)
+    df['games_won_bm'] = df.groupby('team')['games_won'].shift(1)
 
-    return df
-
-def add_opponent_win_rate(df):
-    # Calculate cumulative win rates for each team
-    df = calculate_cumulative_win_rate(df)
-    
-    # Create a dictionary to quickly lookup win rates by team and date
-    win_rate_lookup = df.set_index(['team', 'date'])['win_rate'].to_dict()
-    
-    # Function to get the opponent's win rate for each match
-    def get_opponent_win_rate(row):
-        opponent_team = row['opponent']
-        match_date = row['date']
-        # Find the most recent match of the opponent before the current match date
-        opponent_matches = df[(df['team'] == opponent_team) & (df['date'] < match_date)]
-        if not opponent_matches.empty:
-            opponent_win_rate = opponent_matches.iloc[-1]['win_rate']
-        else:
-            opponent_win_rate = 0
-        return opponent_win_rate
-
-    df['win_rate_opponent'] = df.apply(get_opponent_win_rate, axis=1)
     
     return df
 
 
 
+def calculate_rolling_sums(df):
+    # Ensure 'date' is in datetime format and sort by team and date
+    df['date'] = pd.to_datetime(df['date'])
+    df = df.sort_values(by=['team', 'date']).reset_index(drop=True)
+    
+    # Calculate whether the team won the match
+    df['team_wins'] = df['score'] > df['opponent_score']
+    
+    # Calculate rolling sums with the correct min_periods
+    df['rolling_sum_3'] = df.groupby('team')['team_wins'].rolling(window=3, min_periods=3).sum().reset_index(level=0, drop=True)
+    df['rolling_sum_5'] = df.groupby('team')['team_wins'].rolling(window=5, min_periods=5).sum().reset_index(level=0, drop=True)
+    df['rolling_sum_8'] = df.groupby('team')['team_wins'].rolling(window=8, min_periods=8).sum().reset_index(level=0, drop=True)
+    df['rolling_sum_10'] = df.groupby('team')['team_wins'].rolling(window=10, min_periods=10).sum().reset_index(level=0, drop=True)
+    
+    # Correct win rate calculations
+    df["win_rate_last_3"] = df["rolling_sum_3"] / 3
+    df["win_rate_last_5"] = df["rolling_sum_5"] / 5
+    df["win_rate_last_8"] = df["rolling_sum_8"] / 8
+    df["win_rate_last_10"] = df["rolling_sum_10"] / 10
+    
+    # Shift win rates by one row to reflect the previous window
+    df["win_rate_last_3_bm"] = df.groupby('team')["win_rate_last_3"].shift(1)
+    df["win_rate_last_5_bm"] = df.groupby('team')["win_rate_last_5"].shift(1)
+    df["win_rate_last_8_bm"] = df.groupby('team')["win_rate_last_8"].shift(1)
+    df["win_rate_last_10_bm"] = df.groupby('team')["win_rate_last_10"].shift(1)
+
+    return df
+
+
+def calculate_win_streaks(df):
+    # Ensure 'date' is in datetime format and sort by team and date
+    df['date'] = pd.to_datetime(df['date'])
+    df = df.sort_values(by=['team', 'date']).reset_index(drop=True)
+    
+    # Calculate whether the team won the match
+    df['team_wins'] = df['score'] > df['opponent_score']
+    
+    # Define a function to check for streaks
+    def streak_check(series, length):
+        return series.rolling(window=length, min_periods=length).apply(lambda x: x.all(), raw=True)
+    
+    # Calculate rolling streaks
+    df['win_streak_3'] = df.groupby('team')['team_wins'].apply(lambda x: streak_check(x, 3)).reset_index(level=0, drop=True)
+    df['win_streak_5'] = df.groupby('team')['team_wins'].apply(lambda x: streak_check(x, 5)).reset_index(level=0, drop=True)
+    
+    df['win_streak_3_bm'] = df.groupby('team')["win_streak_3"].shift(1)
+    df['win_streak_5_bm'] = df.groupby('team')["win_streak_5"].shift(1)
+
+    return df
+
+
+def make_opponent_df(df, col_lst, prefix ="opp_"):
+    opp_df = df.copy()  
+    
+    opp_df["opponent"] = opp_df["team"]
+    rename_dict = {col: f"{prefix}{col}" for col in col_lst}
+    opp_df = opp_df.rename(columns=rename_dict)
+
+    new_cols = [prefix + i for i in col_lst]
+    selected_cols = ["opponent", "date", "datetime"] + new_cols
+    selected_cols = [col for col in selected_cols if col in opp_df.columns]
+    
+    opp_df = opp_df[selected_cols]
+
+    return opp_df
 
 
 
 
 
 
+
+
+
+
+
+##LEGACY ###
 
 
 def add_last_game_columns(df):
@@ -158,67 +230,73 @@ def add_last_game_columns(df):
     return df
 
 
+def add_prefix_to_columns(df, col_lst, prefix='opp_'):
+    opp_df = df.copy()  
+    # Iterate over each column name in the list
+    for col in col_lst:
+        # Create a new column with the prefix
+        opp_df[prefix + col] = opp_df[col]
+        new_cols = [prefix + i for i in bm_cols]
 
-test = calculate_cumulative_win_rate(test)
-test = add_opponent_win_rate(test)
-
-
-test
-
-
-vita_df = test[test["team"] == "TEAM VITALITY"]
-
-trace_df=test[test["team"] == "TRACE ESPORTS"]
-
-trace_df.tail(1)
-
-vita_df.tail(1)
-
-vita_df
-
-jou = add_last_game_columns(jou)
+        new_cols = [prefix + i for i in bm_cols]
+        selected_cols = ["opponent", "date", "datetime"] + new_cols
+        selected_cols = [col for col in selected_cols if col in opp_df.columns]
+        
+        opp_df = opp_df[selected_cols]
 
 
+    return df
 
-trace_df
 
+# Define the function to process each group
+def opponent_stats(group):
+    team = group['team'].iloc[0]
+    opponent = group['opponent'].iloc[0]
+    date = group['date'].iloc[0]
 
-jou
+    temp_df = winrate_df[(winrate_df['team'] == team) & (winrate_df['opponent'] == opponent) & (winrate_df['date'] == date)]
+    opponent_df = winrate_df[(winrate_df['team'] == opponent) & (winrate_df['opponent'] == team) & (winrate_df['date'] == date)]
 
-[]
-vita_df
-import seaborn as sns
-import matplotlib.pyplot as plt
+    if not opponent_df.empty:
+        opponent_df = opponent_df.rename(columns={
+            "games_won": "opponent_games_won",
+            "games_played": "opponent_games_played",
+            "win_rate": "opponent_win_rate",
+            "win_rate_bm": "opponent_win_rate_bm",
+            "games_played_bm": "opponent_games_played_bm",
+            "games_won_bm": "opponent_games_won_bm"
+        })
 
-vita_df = jou[jou["team"] == "TEAM VITALITY"]
+        temp_df["opponent_games_won"] = opponent_df["opponent_games_won"].values[0]
+        temp_df["opponent_games_played"] = opponent_df["opponent_games_played"].values[0]
+        temp_df["opponent_win_rate"] = opponent_df["opponent_win_rate"].values[0]
+        temp_df["opponent_win_rate_bm"] = opponent_df["opponent_win_rate_bm"].values[0]
+        temp_df["opponent_games_played_bm"] = opponent_df["opponent_games_played_bm"].values[0]
+        temp_df["opponent_games_won_bm"] = opponent_df["opponent_games_won_bm"].values[0]
+    else:
+        temp_df["opponent_games_won"] = None
+        temp_df["opponent_games_played"] = None
+        temp_df["opponent_win_rate"] = None
+        temp_df["opponent_win_rate_bm"] = None
+        temp_df["opponent_games_played_bm"] = None
+        temp_df["opponent_games_won_bm"] = None
+    
+    return temp_df
 
-vita_df.columns
-# Encode categorical variables
-vita_df['day_of_week'] = pd.Categorical(vita_df['day_of_week']).codes
-vita_df['month'] = pd.Categorical(vita_df['month']).codes
-vita_df['hour'] = pd.Categorical(vita_df['hour']).codes
-vita_df['hour'] = pd.Categorical(vita_df['hour']).codes
-vita_df['is_weekend'] = vita_df['is_weekend'].astype(int)
+def make_opponent_df(df):
+    # Step 1: Rename the columns that do not conflict
+    temp_opponent_df = df.copy()  
 
-# Calculate correlation matrix
-corr_matrix = vita_df[['team_wins', 'cumulative_wins', 'cumulative_games', 'win_rate', 'day_of_week', 'month', 'hour', 'is_weekend','win_rate_before_this_match',
-                       "win_rate_opponent"]].corr()
+    temp_opponent_df["opponent"] = temp_opponent_df["team"]
 
-# Set up the matplotlib figure
-plt.figure(figsize=(14, 12))
+    temp_opponent_df["opponent_games_won"] = temp_opponent_df["games_won"]
+    temp_opponent_df["opponent_games_played"] = temp_opponent_df["games_played"]
+    temp_opponent_df["opponent_win_rate"] = temp_opponent_df["win_rate"]
+    temp_opponent_df["opponent_win_rate_bm"] = temp_opponent_df["win_rate_bm"]
+    temp_opponent_df["opponent_games_played_bm"] = temp_opponent_df["games_played_bm"]
+    temp_opponent_df["opponent_games_won_bm"] = temp_opponent_df["games_won_bm"]
+    
+    temp_opponent_df = temp_opponent_df[["opponent", "date", "datetime","opponent_games_played", "opponent_games_won", "opponent_win_rate",
+                       "opponent_win_rate_bm", "opponent_games_played_bm", "opponent_games_won_bm"]]
 
-# Define the color palette
-cmap = sns.color_palette("coolwarm", as_cmap=True)
-
-# Draw the heatmap
-sns.heatmap(corr_matrix, annot=True, cmap=cmap, fmt='.2f', linewidths=0.5, vmin=-1, vmax=1, center=0,
-            cbar_kws={'shrink': .8, 'label': 'Correlation Coefficient'})
-
-# Add titles and labels
-plt.title('Correlation Matrix Heatmap with Additional Features', fontsize=16)
-plt.xticks(ticks=np.arange(len(corr_matrix.columns)) + 0.5, labels=corr_matrix.columns, rotation=45, ha='right')
-plt.yticks(ticks=np.arange(len(corr_matrix.columns)) + 0.5, labels=corr_matrix.columns, rotation=0, va='center')
-
-# Show plot
-plt.tight_layout()
-plt.show()
+    return temp_opponent_df
