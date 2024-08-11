@@ -97,3 +97,4 @@ num_pages = 525
 df = scrape_multiple_pages(base_url, num_pages)
 
 df.to_csv("D:\\betting\\esport\\valorant_raw_enhanced.csv")
+

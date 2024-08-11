@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 sys.path.append('D:/betting/esport')
 
-from func import date_formating, expand_df, cleansing_df, adjust_scores, filter_by_match_count, calculate_cumulative_win_rate, calculate_rolling_sums, calculate_win_streaks, drop_rolling_columns, make_opponent_df, create_match_id
 
+from func import date_formating, expand_df, cleansing_df, adjust_scores, filter_by_match_count, calculate_cumulative_win_rate, calculate_rolling_sums, calculate_win_streaks, drop_rolling_columns, make_opponent_df, create_match_id
 
 
 df = pd.read_csv("D:\\betting\\esport\\valorant_raw_enhanced.csv")
@@ -35,10 +35,16 @@ merged_df = pd.merge(win_streak_df,opp_df, on =["opponent", "datetime", "date"],
 # TODO  making custom match_id - is needed?
 merged_df['match_id_1'] = merged_df.apply(create_match_id, axis=1)
 
-# droping one team record from the match for model
 filtered_df = merged_df.drop_duplicates(subset=['match_id'])
 
 features_df = filtered_df[bm_cols+["team_wins"]]
+
+
+features_df = filtered_df[bm_cols+["team_wins"]]
+
+bm_cols = [i for i in filtered_df.columns if "bm" in i]
+merged_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_all.csv")
+filtered_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_one_row_per_match.csv")
 
 
 bm_cols = [i for i in filtered_df.columns if "bm" in i]
@@ -55,9 +61,6 @@ corr_df = corr_df.dropna()
 
 correlations = corr_df.corr()
 team_wins_correlations = correlations['team_wins'].drop('team_wins')
-
-team_wins_correlations
-
 
 correlations
 

@@ -1,0 +1,850 @@
+{
+    "train_auc": [
+        0.640048720622925,
+        0.6993982272737201,
+        0.6994429344858466,
+        0.6962051767538878,
+        0.6945579719443474,
+        0.6945579036890617,
+        0.6944544969312425,
+        0.69434733613271,
+        0.6943380534138563,
+        0.6943710207168443,
+        0.6937417411104316,
+        0.693706521383016,
+        0.6933089684715185,
+        0.6930538643412546,
+        0.6884417523042985,
+        0.683553991296086
+    ],
+    "test_auc": [
+        0.6377727345843408,
+        0.6884466745447475,
+        0.6883623461424585,
+        0.6862348185657707,
+        0.6829207495048957,
+        0.6826904252343271,
+        0.6827491207742462,
+        0.6833981151301871,
+        0.6839598091577672,
+        0.6837525173142556,
+        0.6843736498632729,
+        0.6841444400649811,
+        0.6838975844556379,
+        0.6833227025061137,
+        0.6771184353403616,
+        0.6744786220070383
+    ],
+    "features_count": [
+        16,
+        15,
+        14,
+        13,
+        12,
+        11,
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+    ],
+    "features_df": [
+        [
+            {
+                "Feature": "games_won_bm",
+                "Coefficient": 0.013759631705646185,
+                "Abs_coefficient": 0.013759631705646185
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.00018471295034743572,
+                "Abs_coefficient": 0.00018471295034743572
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.00017299513734375443,
+                "Abs_coefficient": 0.00017299513734375443
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.00017226261302910912,
+                "Abs_coefficient": 0.00017226261302910912
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.00017084451493647813,
+                "Abs_coefficient": 0.00017084451493647813
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": 0.0001635094342678036,
+                "Abs_coefficient": 0.0001635094342678036
+            },
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 0.00013319778608660148,
+                "Abs_coefficient": 0.00013319778608660148
+            },
+            {
+                "Feature": "win_streak_5_bm",
+                "Coefficient": 0.0001216398762630885,
+                "Abs_coefficient": 0.0001216398762630885
+            },
+            {
+                "Feature": "Unnamed: 0",
+                "Coefficient": 2.3077071039626423e-06,
+                "Abs_coefficient": 2.3077071039626423e-06
+            },
+            {
+                "Feature": "opp_win_streak_5_bm",
+                "Coefficient": -0.00010787934394998263,
+                "Abs_coefficient": 0.00010787934394998263
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -0.00014653618169629742,
+                "Abs_coefficient": 0.00014653618169629742
+            },
+            {
+                "Feature": "opp_win_streak_3_bm",
+                "Coefficient": -0.00017235203447138014,
+                "Abs_coefficient": 0.00017235203447138014
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": -0.000180895470622014,
+                "Abs_coefficient": 0.000180895470622014
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -0.00018498225029890005,
+                "Abs_coefficient": 0.00018498225029890005
+            },
+            {
+                "Feature": "opp_win_rate_last_3_bm",
+                "Coefficient": -0.00018715225037023428,
+                "Abs_coefficient": 0.00018715225037023428
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.00018776603741676998,
+                "Abs_coefficient": 0.00018776603741676998
+            },
+            {
+                "Feature": "opp_games_won_bm",
+                "Coefficient": -0.014276765115806408,
+                "Abs_coefficient": 0.014276765115806408
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 1.8305191172412087,
+                "Abs_coefficient": 1.8305191172412087
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9105474514824143,
+                "Abs_coefficient": 0.9105474514824143
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.3046006100060874,
+                "Abs_coefficient": 0.3046006100060874
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.1522600617369735,
+                "Abs_coefficient": 0.1522600617369735
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.14789771488348216,
+                "Abs_coefficient": 0.14789771488348216
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.1237660812800288,
+                "Abs_coefficient": 0.1237660812800288
+            },
+            {
+                "Feature": "opp_win_streak_5_bm",
+                "Coefficient": 0.06085224438812135,
+                "Abs_coefficient": 0.06085224438812135
+            },
+            {
+                "Feature": "win_streak_5_bm",
+                "Coefficient": 0.03405842379504571,
+                "Abs_coefficient": 0.03405842379504571
+            },
+            {
+                "Feature": "games_won_bm",
+                "Coefficient": 0.005696017292673721,
+                "Abs_coefficient": 0.005696017292673721
+            },
+            {
+                "Feature": "opp_win_streak_3_bm",
+                "Coefficient": -0.004383140935085932,
+                "Abs_coefficient": 0.004383140935085932
+            },
+            {
+                "Feature": "opp_games_won_bm",
+                "Coefficient": -0.00533112779727508,
+                "Abs_coefficient": 0.00533112779727508
+            },
+            {
+                "Feature": "opp_win_rate_last_3_bm",
+                "Coefficient": -0.08613185066539952,
+                "Abs_coefficient": 0.08613185066539952
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": -0.11707858589087025,
+                "Abs_coefficient": 0.11707858589087025
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.36898688407118857,
+                "Abs_coefficient": 0.36898688407118857
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.1772329055665385,
+                "Abs_coefficient": 1.1772329055665385
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.197282496996036,
+                "Abs_coefficient": 2.197282496996036
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 1.8229415954445365,
+                "Abs_coefficient": 1.8229415954445365
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9147998826012648,
+                "Abs_coefficient": 0.9147998826012648
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.3128079583028,
+                "Abs_coefficient": 0.3128079583028
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.1533506376110779,
+                "Abs_coefficient": 0.1533506376110779
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.13629271118288927,
+                "Abs_coefficient": 0.13629271118288927
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.12228626450188725,
+                "Abs_coefficient": 0.12228626450188725
+            },
+            {
+                "Feature": "opp_win_streak_5_bm",
+                "Coefficient": 0.07090910137095773,
+                "Abs_coefficient": 0.07090910137095773
+            },
+            {
+                "Feature": "win_streak_5_bm",
+                "Coefficient": 0.029888736356017055,
+                "Abs_coefficient": 0.029888736356017055
+            },
+            {
+                "Feature": "games_won_bm",
+                "Coefficient": 0.005680021322086924,
+                "Abs_coefficient": 0.005680021322086924
+            },
+            {
+                "Feature": "opp_games_won_bm",
+                "Coefficient": -0.005377341515048985,
+                "Abs_coefficient": 0.005377341515048985
+            },
+            {
+                "Feature": "opp_win_rate_last_3_bm",
+                "Coefficient": -0.08755656687714607,
+                "Abs_coefficient": 0.08755656687714607
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": -0.11579691724834511,
+                "Abs_coefficient": 0.11579691724834511
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.3829520233262794,
+                "Abs_coefficient": 0.3829520233262794
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.1752979240380954,
+                "Abs_coefficient": 1.1752979240380954
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.1744475424821417,
+                "Abs_coefficient": 2.1744475424821417
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 1.9664167945477593,
+                "Abs_coefficient": 1.9664167945477593
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9390092311322894,
+                "Abs_coefficient": 0.9390092311322894
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.3077404035758823,
+                "Abs_coefficient": 0.3077404035758823
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.17506026755514087,
+                "Abs_coefficient": 0.17506026755514087
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.1457543953834144,
+                "Abs_coefficient": 0.1457543953834144
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.10400140600212383,
+                "Abs_coefficient": 0.10400140600212383
+            },
+            {
+                "Feature": "opp_win_streak_5_bm",
+                "Coefficient": 0.05651307132099219,
+                "Abs_coefficient": 0.05651307132099219
+            },
+            {
+                "Feature": "win_streak_5_bm",
+                "Coefficient": 0.037681936595880074,
+                "Abs_coefficient": 0.037681936595880074
+            },
+            {
+                "Feature": "games_won_bm",
+                "Coefficient": 0.003707876248621373,
+                "Abs_coefficient": 0.003707876248621373
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": -0.10156516618952614,
+                "Abs_coefficient": 0.10156516618952614
+            },
+            {
+                "Feature": "opp_win_rate_last_3_bm",
+                "Coefficient": -0.11834254814032973,
+                "Abs_coefficient": 0.11834254814032973
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.3383170672523682,
+                "Abs_coefficient": 0.3383170672523682
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.1515199885000527,
+                "Abs_coefficient": 1.1515199885000527
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.7089139679515695,
+                "Abs_coefficient": 2.7089139679515695
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.3251694350169587,
+                "Abs_coefficient": 2.3251694350169587
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.911057391575737,
+                "Abs_coefficient": 0.911057391575737
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.28021893436126744,
+                "Abs_coefficient": 0.28021893436126744
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.2069544652349004,
+                "Abs_coefficient": 0.2069544652349004
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.1444304511694487,
+                "Abs_coefficient": 0.1444304511694487
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.10507045657004305,
+                "Abs_coefficient": 0.10507045657004305
+            },
+            {
+                "Feature": "opp_win_streak_5_bm",
+                "Coefficient": 0.05504445288955153,
+                "Abs_coefficient": 0.05504445288955153
+            },
+            {
+                "Feature": "win_streak_5_bm",
+                "Coefficient": 0.04430056281991001,
+                "Abs_coefficient": 0.04430056281991001
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": -0.09425020716759068,
+                "Abs_coefficient": 0.09425020716759068
+            },
+            {
+                "Feature": "opp_win_rate_last_3_bm",
+                "Coefficient": -0.11088311347020179,
+                "Abs_coefficient": 0.11088311347020179
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.33732711328172804,
+                "Abs_coefficient": 0.33732711328172804
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.2507277862025492,
+                "Abs_coefficient": 1.2507277862025492
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.638595111099281,
+                "Abs_coefficient": 2.638595111099281
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.3205703470642836,
+                "Abs_coefficient": 2.3205703470642836
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9129572969531781,
+                "Abs_coefficient": 0.9129572969531781
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.28009677143751394,
+                "Abs_coefficient": 0.28009677143751394
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.20479144833759108,
+                "Abs_coefficient": 0.20479144833759108
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.1635533212138886,
+                "Abs_coefficient": 0.1635533212138886
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.134913201219175,
+                "Abs_coefficient": 0.134913201219175
+            },
+            {
+                "Feature": "opp_win_streak_5_bm",
+                "Coefficient": 0.05641519763159959,
+                "Abs_coefficient": 0.05641519763159959
+            },
+            {
+                "Feature": "opp_win_rate_last_3_bm",
+                "Coefficient": -0.11029992639829317,
+                "Abs_coefficient": 0.11029992639829317
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": -0.1126794346513408,
+                "Abs_coefficient": 0.1126794346513408
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.3377975334641226,
+                "Abs_coefficient": 0.3377975334641226
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.2493043357939262,
+                "Abs_coefficient": 1.2493043357939262
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6377620410011535,
+                "Abs_coefficient": 2.6377620410011535
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.3194658619324153,
+                "Abs_coefficient": 2.3194658619324153
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9136740991222811,
+                "Abs_coefficient": 0.9136740991222811
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.2768912524559424,
+                "Abs_coefficient": 0.2768912524559424
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.20788841414127762,
+                "Abs_coefficient": 0.20788841414127762
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.16614671199615025,
+                "Abs_coefficient": 0.16614671199615025
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.13811252466870946,
+                "Abs_coefficient": 0.13811252466870946
+            },
+            {
+                "Feature": "opp_win_rate_last_3_bm",
+                "Coefficient": -0.10972860137316026,
+                "Abs_coefficient": 0.10972860137316026
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": -0.1163636702466142,
+                "Abs_coefficient": 0.1163636702466142
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.30276692223488083,
+                "Abs_coefficient": 0.30276692223488083
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.2515523307368053,
+                "Abs_coefficient": 1.2515523307368053
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6404754782024753,
+                "Abs_coefficient": 2.6404754782024753
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.319305057046655,
+                "Abs_coefficient": 2.319305057046655
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9161686585027836,
+                "Abs_coefficient": 0.9161686585027836
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.275577179383275,
+                "Abs_coefficient": 0.275577179383275
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.19659549062241768,
+                "Abs_coefficient": 0.19659549062241768
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.164482505664408,
+                "Abs_coefficient": 0.164482505664408
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.14219179890670905,
+                "Abs_coefficient": 0.14219179890670905
+            },
+            {
+                "Feature": "win_rate_last_3_bm",
+                "Coefficient": -0.12306082380212838,
+                "Abs_coefficient": 0.12306082380212838
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.405629786394449,
+                "Abs_coefficient": 0.405629786394449
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.2492025983813533,
+                "Abs_coefficient": 1.2492025983813533
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6345592214156355,
+                "Abs_coefficient": 2.6345592214156355
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.316559037234207,
+                "Abs_coefficient": 2.316559037234207
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9144347747050001,
+                "Abs_coefficient": 0.9144347747050001
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.27505013380893983,
+                "Abs_coefficient": 0.27505013380893983
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.1947554678678443,
+                "Abs_coefficient": 0.1947554678678443
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.12978254347978724,
+                "Abs_coefficient": 0.12978254347978724
+            },
+            {
+                "Feature": "win_rate_last_5_bm",
+                "Coefficient": 0.05908045990873937,
+                "Abs_coefficient": 0.05908045990873937
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.4071511566041711,
+                "Abs_coefficient": 0.4071511566041711
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.2517653274456177,
+                "Abs_coefficient": 1.2517653274456177
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6325556316981626,
+                "Abs_coefficient": 2.6325556316981626
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.3152007128557575,
+                "Abs_coefficient": 2.3152007128557575
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9224123272969036,
+                "Abs_coefficient": 0.9224123272969036
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.31886047377532195,
+                "Abs_coefficient": 0.31886047377532195
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.1954654051770245,
+                "Abs_coefficient": 0.1954654051770245
+            },
+            {
+                "Feature": "win_streak_3_bm",
+                "Coefficient": 0.1376873715149682,
+                "Abs_coefficient": 0.1376873715149682
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.40652011119461556,
+                "Abs_coefficient": 0.40652011119461556
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.2491216499157043,
+                "Abs_coefficient": 1.2491216499157043
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6348965938943496,
+                "Abs_coefficient": 2.6348965938943496
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.3017445647302215,
+                "Abs_coefficient": 2.3017445647302215
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9403711242270106,
+                "Abs_coefficient": 0.9403711242270106
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.44389841996074264,
+                "Abs_coefficient": 0.44389841996074264
+            },
+            {
+                "Feature": "opp_win_rate_last_8_bm",
+                "Coefficient": 0.2008810872024674,
+                "Abs_coefficient": 0.2008810872024674
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.3916758015355923,
+                "Abs_coefficient": 0.3916758015355923
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.255708991331104,
+                "Abs_coefficient": 1.255708991331104
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.632094434494862,
+                "Abs_coefficient": 2.632094434494862
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.301548873314266,
+                "Abs_coefficient": 2.301548873314266
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9395279518694012,
+                "Abs_coefficient": 0.9395279518694012
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.44643441487025787,
+                "Abs_coefficient": 0.44643441487025787
+            },
+            {
+                "Feature": "opp_win_rate_last_5_bm",
+                "Coefficient": -0.3396802267938552,
+                "Abs_coefficient": 0.3396802267938552
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.112091673513228,
+                "Abs_coefficient": 1.112091673513228
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6272649091227507,
+                "Abs_coefficient": 2.6272649091227507
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.309116395963877,
+                "Abs_coefficient": 2.309116395963877
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 0.9322189097397795,
+                "Abs_coefficient": 0.9322189097397795
+            },
+            {
+                "Feature": "win_rate_last_8_bm",
+                "Coefficient": 0.4212597961306152,
+                "Abs_coefficient": 0.4212597961306152
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.4441472989948163,
+                "Abs_coefficient": 1.4441472989948163
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6237149074487793,
+                "Abs_coefficient": 2.6237149074487793
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 2.313738205626623,
+                "Abs_coefficient": 2.313738205626623
+            },
+            {
+                "Feature": "win_rate_last_10_bm",
+                "Coefficient": 1.3417932820008784,
+                "Abs_coefficient": 1.3417932820008784
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.4290335073491855,
+                "Abs_coefficient": 1.4290335073491855
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.6323963629940934,
+                "Abs_coefficient": 2.6323963629940934
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 3.5385310996415718,
+                "Abs_coefficient": 3.5385310996415718
+            },
+            {
+                "Feature": "opp_win_rate_last_10_bm",
+                "Coefficient": -1.2489695476036495,
+                "Abs_coefficient": 1.2489695476036495
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -2.7160793079122985,
+                "Abs_coefficient": 2.7160793079122985
+            }
+        ],
+        [
+            {
+                "Feature": "win_rate_bm",
+                "Coefficient": 3.476069463665211,
+                "Abs_coefficient": 3.476069463665211
+            },
+            {
+                "Feature": "opp_win_rate_bm",
+                "Coefficient": -3.8250249278323523,
+                "Abs_coefficient": 3.8250249278323523
+            }
+        ]
+    ]
+}
