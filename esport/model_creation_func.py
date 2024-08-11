@@ -1,3 +1,4 @@
+
 import numpy as np
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, auc
 from scipy import stats
@@ -421,4 +422,3 @@ def features_ref(X,y):
     })
 
     selected_features = features_df.loc[features_df['selected'], 'features_name'].tolist()
-    return selected_features
