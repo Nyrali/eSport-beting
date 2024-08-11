@@ -1,0 +1,35 @@
+{
+    "Dataset_info": {
+        "observations_count": 10938,
+        "defaults_count": 5553
+    },
+    "Metrics": {
+        "auc_train": 0.6981776862550236,
+        "auc_test": 0.6917380826693247,
+        "gini_train": 0.39635537251004727,
+        "gini_test": 0.38347616533864937,
+        "accuracy_score": 0.6334552102376599,
+        "ks_statistic_train": 0.28960444696837323,
+        "ks_p_value_train": 5.959745935465163e-142,
+        "ks_statistic_test": 0.2788220176628996,
+        "ks_p_value_test": 1.2028576636068142e-56
+    },
+    "Feature_importance": {
+        "win_rate_bm": 1.7442726345866675,
+        "win_rate_last_10_bm": 0.687112724583716,
+        "win_rate_last_8_bm": 0.5418797793622794,
+        "opp_win_rate_last_8_bm": 0.13505964307577017,
+        "opp_win_rate_last_3_bm": 0.13071080475210295,
+        "win_rate_last_3_bm": 0.09819275030783328,
+        "win_streak_5_bm": 0.09109256559194161,
+        "opp_win_streak_5_bm": 0.04123986478392269,
+        "win_rate_last_5_bm": 0.04100046293141609,
+        "games_won_bm": 0.0055693236253802165,
+        "opp_games_won_bm": -0.00422835358692755,
+        "win_streak_3_bm": -0.026805006468605008,
+        "opp_win_streak_3_bm": -0.09444139745136874,
+        "opp_win_rate_last_5_bm": -0.45591676049655694,
+        "opp_win_rate_last_10_bm": -1.0719188284067585,
+        "opp_win_rate_bm": -2.283700084173123
+    }
+}
