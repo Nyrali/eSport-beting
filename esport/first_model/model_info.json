@@ -1,3 +1,4 @@
+
 {
     "Dataset_info": {
         "observations_count": 10938,
@@ -31,5 +32,4 @@
         "opp_win_rate_last_5_bm": -0.45591676049655694,
         "opp_win_rate_last_10_bm": -1.0719188284067585,
         "opp_win_rate_bm": -2.283700084173123
-    }
-}
+    }}
