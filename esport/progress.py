@@ -1,4 +1,5 @@
 import sys
+
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,6 +7,7 @@ sys.path.append('D:/betting/esport')
 
 
 from func import date_formating, expand_df, cleansing_df, adjust_scores, filter_by_match_count, calculate_cumulative_win_rate, calculate_rolling_sums, calculate_win_streaks, drop_rolling_columns, make_opponent_df, create_match_id
+
 
 
 df = pd.read_csv("D:\\betting\\esport\\valorant_raw_enhanced.csv")
@@ -45,12 +47,6 @@ features_df = filtered_df[bm_cols+["team_wins"]]
 bm_cols = [i for i in filtered_df.columns if "bm" in i]
 merged_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_all.csv")
 filtered_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_one_row_per_match.csv")
-
-
-bm_cols = [i for i in filtered_df.columns if "bm" in i]
-merged_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_all.csv")
-filtered_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_one_row_per_match.csv")
-
 
 # corr
 bm_cols = [i for i in filtered_df.columns if "bm" in i]
@@ -294,16 +290,6 @@ def make_opponent_df(df, col_lst, prefix ="opp_"):
     opp_df = opp_df[selected_cols]
 
     return opp_df
-
-
-
-
-
-
-
-
-
-
 
 ##LEGACY ###
 
