@@ -5,13 +5,16 @@ sys.path.append('D:/betting/esport')
 
 from func import date_formating, expand_df, cleansing_df, adjust_scores, filter_by_match_count, calculate_cumulative_win_rate, calculate_rolling_sums, calculate_win_streaks, drop_rolling_columns, make_opponent_df
 
-df = pd.read_csv("D:\\betting\\esport\\valorant.csv")
+
+
+df = pd.read_csv("D:\\betting\\esport\\valorant_raw_enhanced.csv")
+
 
 df = date_formating(df)
 expanded_df = expand_df(df)
-expanded_df = cleansing_df(expanded_df)
-expanded_df = adjust_scores(expanded_df)
-filtered_df = filter_by_match_count (expanded_df, match_count = 20)
+cleansed_df = cleansing_df(expanded_df)
+score_df = adjust_scores(cleansed_df)
+filtered_df = filter_by_match_count (score_df, match_count = 11)
 filtered_df = filtered_df.dropna()
 
 
@@ -28,16 +31,94 @@ opp_df = opp_df.drop_duplicates(subset=['opponent', 'datetime'])
 duplicates = opp_df[opp_df.duplicated(subset=['opponent', 'datetime'], keep=False)]
 merged_df = pd.merge(win_streak_df,opp_df, on =["opponent", "datetime", "date"], how = "left" )
 
+# TODO  making custom match_id - is needed?
+merged_df['match_id_1'] = merged_df.apply(create_match_id, axis=1)
+filtered_df = merged_df.drop_duplicates(subset=['match_id'])
+
+features_df = filtered_df[bm_cols+["team_wins"]]
+
+
+bm_cols = [i for i in filtered_df.columns if "bm" in i]
+merged_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_all.csv")
+filtered_df[bm_cols+["team_wins"]].to_csv("D:\\eSport-betting\\esport\\valorant_features_one_row_per_match.csv")
 
 
 
-win_streak_df["games_played_bm"]
-bm_cols
+
+# corr
+bm_cols = [i for i in filtered_df.columns if "bm" in i]
+corr_df = filtered_df[bm_cols + ["team_wins"]]
+
+corr_df['team_wins'] = corr_df['team_wins'].astype(int)
+corr_df = corr_df.dropna()
+
+correlations = corr_df.corr()
+team_wins_correlations = correlations['team_wins'].drop('team_wins')
+
+team_wins_correlations
+
+
+correlations
+import matplotlib.pyplot as plt
+# Create a bar plot
+correlations_series = pd.Series(team_wins_correlations)
+
+# Create a horizontal bar plot
+plt.figure(figsize=(12, 8))
+correlations_series.plot(kind='barh', color='skyblue')
+plt.xlabel('Correlation with team_wins')
+plt.title('Correlation of Different Features with team_wins')
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+
+# Show the plot
+plt.tight_layout()
+plt.show()
+
+
+import seaborn as sns
+# Plotting the heatmap
+plt.figure(figsize=(14, 12))
+sns.heatmap(correlations, annot=True, cmap='coolwarm', center=0, fmt=".2f", linewidths=0.5)
+plt.title('Correlation Matrix Heatmap')
+plt.show()
+
+
 
 merged_df
 
-merged_df.iloc[0]
+team1_columns = [col for col in merged_df.columns if 'team' in col]
+team2_columns = [col for col in merged_df.columns if 'opponent' in col]
 
+# Ensure you have columns for both teams
+assert len(team1_columns) == len(team2_columns), "Mismatch in number of team1 and team2 columns"
+
+cleaned_df = pd.DataFrame()
+test = merged_df.copy()
+
+
+merged_df
+
+merged_df['datetime'] = pd.to_datetime(merged_df['datetime']).astype(str)
+
+
+
+merged_df['match_id'] = merged_df.apply(create_match_id, axis=1)
+filtered_df = merged_df.drop_duplicates(subset=['match_id'])
+
+filtered_df
+
+
+merged_df[merged_df["match_id"] == "2024-07-16 18:00:00_TEAM HERETICS_TEAM VITALITY"]
+
+merged_df[merged_df["match_id"] == "2024-08-03 12:30:00_TEAM VITALITY_TRACE ESPORTS"]
+
+filtered_df[filtered_df["match_id"] == "2024-08-03 12:30:00_TEAM VITALITY_TRACE ESPORTS"]
+
+
+pe_df = merged_df[merged_df["team"] == "PCIFIC ESPOR"]
+expanded_df[expanded_df["team"] == "PCIFIC ESPOR"]
+
+ista_df = merged_df[merged_df["team"] == "İSTANBUL WILDCATS"]
 
 vita_df_merged = merged_df[merged_df["team"] == "TEAM VITALITY"]
 
@@ -47,17 +128,68 @@ vita_df = win_streak_df[win_streak_df["team"] == "TEAM VITALITY"]
 
 trace_df_opp=opp_df[(opp_df["opponent"] == "TRACE ESPORTS") & (opp_df["datetime"] == "2024-08-03 12:30:00")]
 
-vita_df.iloc[135]
-trace_df_opp.iloc[0]
-
-trace_df_merged.iloc[47]
-
-trace_df_opp.iloc[44]
-
 vita_df_merged.iloc[135]
-
 trace_df_merged.iloc[47]
 
+
+
+def expand_df(df):
+
+    if 'Unnamed: 0' in df.columns:
+        df = df.drop(columns=['Unnamed: 0'])
+
+    expanded_records = []
+
+    # Identify all columns and columns to exclude
+    all_cols = df.columns.tolist()
+    col_exclude = ["team", "opponent", "score", "opponent_score", "team_1", "team_2",
+                   "score_1", "score_2"]
+
+    # Determine which columns to include
+    columns_to_include = [col for col in all_cols if col not in col_exclude]
+
+    # Iterate through each row in the original DataFrame
+    for row in df.itertuples(index=False):
+        # Create a row for team_1
+        record_team_1 = {
+            'team': row.team_1,
+            'opponent': row.team_2,
+            'score': row.score_1,
+            'opponent_score': row.score_2,
+        }
+        
+        # Add additional columns
+        record_team_1.update({
+            col: getattr(row, col) for col in columns_to_include
+        })
+
+        expanded_records.append(record_team_1)
+        
+        # Create a row for team_2
+        record_team_2 = {
+            'team': row.team_2,
+            'opponent': row.team_1,
+            'score': row.score_2,
+            'opponent_score': row.score_1,
+        }
+        
+        # Add additional columns
+        record_team_2.update({
+            col: getattr(row, col) for col in columns_to_include
+        })
+
+        expanded_records.append(record_team_2)
+
+    # Create a new DataFrame from the expanded records
+    expanded_df = pd.DataFrame(expanded_records)
+    
+    return expanded_df
+
+def create_match_id(row):
+    # Sort the teams to ensure consistent ordering
+    teams = sorted([row['team'], row['opponent']])
+    return f"{row['datetime']}_{teams[0]}_{teams[1]}"
+# Apply the function to create standardized match IDs
 
 
 def drop_rolling_columns(df):
@@ -65,20 +197,6 @@ def drop_rolling_columns(df):
     columns_to_drop = df.filter(regex='rolling').columns
     df = df.drop(columns=columns_to_drop)
     return df
-
-
-
-bm_cols = [i for i in win_streak_df.columns if "bm" in i]
-
-bm_cols
-
-len(bm_cols)
-
-
-test
-
-
-
 
 
 
